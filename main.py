@@ -82,18 +82,18 @@ def signup():
             db.session.commit()
             flash(f'Account for {new_user} created successfully')
             print(f'New user {new_user} created')
-            return redirect(url_for('notes'))
+            return redirect(url_for('/'))
         except Exception as e:
             print(f'Error: {e}')
     else:
         print("An error occured!")
     return render_template('signup.html')
 
-@app.route('/notes')
+@app.route('/')
 def notes():
     return render_template('notes.html')
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=3000)
