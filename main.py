@@ -24,9 +24,9 @@ class User(db.Model):
         self.email = email
         '''
         take the password given, scramble it into a secret code and
-        put it in the password_hash box
+        put it in the password box
         '''
-        self.password_hash = generate_password_hash(password)
+        self.password = generate_password_hash(password)
 
     def __repr__(self):
         '''
@@ -37,8 +37,20 @@ class User(db.Model):
 
     
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if not username or not password:
+            flash("Both Fields Must Be Filled!", 'danger')
+            return redirect(url_for('login'))
+
+        # Add your authentication logic here
+        # For now, just redirect to notes
+        return redirect(url_for('notes'))
+    
     return render_template('login.html')
 
 @app.route('/signup', methods=['POST', 'GET'])
