@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask-cors import CORS
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'notes_app'
@@ -9,6 +10,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+CORS(app, origins=[
+    "https://notes-app-flask--telvinmaina.repl.co",         # old style
+    "https://telvinmaina-notes-app-flask.replit.app"        # new style
+])
 
 class User(db.Model):
     __tablename__ = 'User'
