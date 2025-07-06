@@ -1,6 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'notes_app'
@@ -43,13 +43,15 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if not username or not password:
-            flash("Both Fields Must Be Filled!", 'danger')
+        if not username and not password:
+            flash("All fields must be filled!", 'danger')
             return redirect(url_for('login'))
 
-        # Add your authentication logic here
-        # For now, just redirect to notes
-        return redirect(url_for('notes'))
+        logged_in_user = User.query.filter_by(username=username).first()
+        if logged_in_user and check_password_hash(password):
+            flash("Login successful!", 'danger')
+            return redirect(url_for('/'))
+        
     
     return render_template('login.html')
 
