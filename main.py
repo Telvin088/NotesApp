@@ -54,7 +54,7 @@ def login():
             return redirect(url_for('login'))
 
         logged_in_user = User.query.filter_by(username=username).first()
-        if logged_in_user and check_password_hash(password):
+        if logged_in_user and check_password_hash(logged_in_user.password, password):
             flash("Login successful!", 'danger')
             return redirect(url_for('/'))
         
