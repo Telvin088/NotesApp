@@ -1,4 +1,4 @@
-run =  ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+run =  ["gunicorn", "--bind", "0.0.0.0:8080", "main:app"]
 entrypoint = "main.py"
 modules = ["python-3.11"]
 
@@ -9,7 +9,7 @@ channel = "stable-24_05"
 packages = ["lsof", "sqlite-interactive"]
 
 [deployment]
-run =  ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+run =  ["gunicorn", "--bind", "0.0.0.0:8080", "main:app"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
